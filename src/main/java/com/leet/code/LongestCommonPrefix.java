@@ -3,7 +3,7 @@ package com.leet.code;
 public class LongestCommonPrefix {
 	public String longestCommonPrefix(String[] strs) {
 
-		StringBuilder prefix = new StringBuilder("");
+		StringBuilder prefix = new StringBuilder();
 		if (strs.length == 0) {
 			return prefix.toString();
 		}

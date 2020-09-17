@@ -17,8 +17,8 @@ public class MaximumSubArray {
 				crossingSum(arr, l, m, h));
 	}
 
-	private int crossingSum(int arr[], int l,
-							int m, int h) {
+	private int crossingSum(int[] arr, int l,
+                            int m, int h) {
 		int sum = 0;
 		int left_sum = Integer.MIN_VALUE;
 		for (int i = m; i >= l; i--) {
