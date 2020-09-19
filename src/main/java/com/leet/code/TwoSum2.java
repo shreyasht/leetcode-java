@@ -4,8 +4,12 @@ import java.util.Arrays;
 
 public class TwoSum2 {
 	public int[] twoSum(int[] numbers, int target) {
+
 		int left = 0;
 		int right = numbers.length - 1;
+		// Traverse the array with two pointers from left and right.
+		// If elements at pointers add up, then return.
+		// If they do not add up then return empty.
 		while (numbers[left] + numbers[right] != target) {
 			if (numbers[left] + numbers[right] > target) {
 				right--;
