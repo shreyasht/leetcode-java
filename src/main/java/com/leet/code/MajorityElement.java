@@ -66,5 +66,6 @@ public class MajorityElement {
 		MajorityElement majorityElement = new MajorityElement();
 		int[] arr = {2, 2, 1, 1, 1, 2, 2};
 		System.out.println(majorityElement.majorityElementRec(arr));
+		System.out.println(majorityElement.majorityElement(arr));
 	}
 }
