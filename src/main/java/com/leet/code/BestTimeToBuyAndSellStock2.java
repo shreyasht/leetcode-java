@@ -1,25 +1,19 @@
 package com.leet.code;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class BestTimeToBuyAndSellStock2 {
 
 	public int maxProfit(int[] prices) {
 
-		List<Integer> profitList = new ArrayList<>();
-		int minPrice = Integer.MAX_VALUE;
-		int maxProfit = 0;
-		for (int i = 0; i < prices.length; i++) {
-			if (prices[i] < minPrice) {
-				minPrice = prices[i];
-			} else if ((prices[i] - minPrice) > maxProfit) {
-				profitList.add((prices[i] - minPrice));
-				maxProfit = 0;
-				minPrice = Integer.MAX_VALUE;
+		int profit = 0;
+		for (int i = 1; i < prices.length; i++) {
+			if (prices[i] > prices[i - 1]) {
+				profit = profit + (prices[i] - prices[i - 1]);
 			}
 		}
-		return profitList.stream().mapToInt(Integer::intValue).sum();
+
+		return profit;
 	}
 
 	public static void main(String[] args) {
@@ -27,10 +21,13 @@ public class BestTimeToBuyAndSellStock2 {
 		int[] arr = {7, 1, 5, 3, 6, 4};
 		int[] arr2 = {7, 6, 4, 3, 1};
 		int[] arr3 = {2, 4, 1};
-		int[] arr4 = {1, 2, 3, 4, 5};
-		System.out.println(bestTimeToBuyAndSellStock.maxProfit(arr));
-		System.out.println(bestTimeToBuyAndSellStock.maxProfit(arr2));
-		System.out.println(bestTimeToBuyAndSellStock.maxProfit(arr3));
-		System.out.println(bestTimeToBuyAndSellStock.maxProfit(arr4));
+		int[] arr4 = {2, 1, 2, 1, 0, 1, 2};
+		System.out.println(Arrays.toString(arr) + " " + bestTimeToBuyAndSellStock.maxProfit(arr));
+		System.out.println("----------------------------------");
+		System.out.println(Arrays.toString(arr2) + " " + bestTimeToBuyAndSellStock.maxProfit(arr2));
+		System.out.println("----------------------------------");
+		System.out.println(Arrays.toString(arr3) + " " + bestTimeToBuyAndSellStock.maxProfit(arr3));
+		System.out.println("----------------------------------");
+		System.out.println(Arrays.toString(arr4) + " " + bestTimeToBuyAndSellStock.maxProfit(arr4));
 	}
 }
