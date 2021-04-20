@@ -41,6 +41,21 @@ public class SameTree {
 		preorder(treeNode.right, nodeList);
 	}
 
+	TreeNode ans;
+	public void getTarget(TreeNode node, int target){
+		if(node==null){
+			return;
+		}
+
+		if(node.val==target){
+			ans = node;
+			return;
+		}
+
+		getTarget(node.left,target);
+		getTarget(node.right,target);
+	}
+
 	public static void main(String[] args) {
 		TreeNode tree = new TreeNode(1);
 		tree.left = new TreeNode(2);
@@ -56,6 +71,9 @@ public class SameTree {
 
 		SameTree sameTree = new SameTree();
 		System.out.println(sameTree.isSameTree(tree, tree2));
+
+		sameTree.getTarget(tree,4);
+		System.out.println(sameTree.ans);
 	}
 
 }
