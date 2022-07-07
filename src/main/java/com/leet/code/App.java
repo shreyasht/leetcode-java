@@ -1,63 +1,71 @@
 package com.leet.code;
 
-// UnionFind.class
 class UnionFind {
-    private int[] root;
-    private int[] rank;
 
-    public UnionFind(int size) {
-        root = new int[size];
-        rank = new int[size];
-        for (int i = 0; i < size; i++) {
-            root[i] = i;
-            rank[i] = 1;
+    private int[] parent;
+
+    // For efficiency, we aren't using makeset, but instead initialising
+    // all the sets at the same time in the constructor.
+    public UnionFind(int n) {
+        parent = new int[n];
+        for (int node = 0; node < n; node++) {
+            parent[node] = node;
         }
     }
 
-    public int find(int x) {
-        while (x != root[x]) {
-            x = root[x];
+    // The find method, without any optimizations. It traces up the parent
+    // links until it finds the root node for A, and returns that root.
+    public int find(int A) {
+        while (parent[A] != A) {
+            A = parent[A];
         }
-        return x;
+        return A;
     }
 
-    public void union(int x, int y) {
-        int rootX = find(x);
-        int rootY = find(y);
-        if (rootX != rootY) {
-            if (rank[rootX] > rank[rootY]) {
-                root[rootY] = rootX;
-            } else if (rank[rootX] < rank[rootY]) {
-                root[rootX] = rootY;
-            } else {
-                root[rootY] = rootX;
-                rank[rootX] += 1;
-            }
+    // The union method, without any optimizations. It returns True if a
+    // merge happened, False if otherwise.
+    public boolean union(int A, int B) {
+        // Find the roots for A and B.
+        int rootA = find(A);
+        int rootB = find(B);
+        // Check if A and B are already in the same set.
+        if (rootA == rootB) {
+            return false;
         }
-    }
-
-    public boolean connected(int x, int y) {
-        return find(x) == find(y);
+        // Merge the sets containing A and B.
+        parent[rootA] = rootB;
+        return true;
     }
 }
 
-// App.java
-// Test Case
 public class App {
-    public static void main(String[] args) throws Exception {
-        UnionFind uf = new UnionFind(10);
-        // 1-2-5-6-7 3-8-9 4
-        uf.union(1, 2);
-        uf.union(2, 5);
-        uf.union(5, 6);
-        uf.union(6, 7);
-        uf.union(3, 8);
-        uf.union(8, 9);
-        System.out.println(uf.connected(1, 5)); // true
-        System.out.println(uf.connected(5, 7)); // true
-        System.out.println(uf.connected(4, 9)); // false
-        // 1-2-5-6-7 3-8-9-4
-        uf.union(9, 4);
-        System.out.println(uf.connected(4, 9)); // true
+
+    public boolean validTree(int n, int[][] edges) {
+
+        // Condition 1: The graph must contain n - 1 edges.
+        if (edges.length != n - 1) return false;
+
+        // Condition 2: The graph must contain a single connected component.
+        // Create a new UnionFind object with n nodes.
+        UnionFind unionFind = new UnionFind(n);
+        // Add each edge. Check if a merge happened, because if it
+        // didn't, there must be a cycle.
+        for (int[] edge : edges) {
+            int A = edge[0];
+            int B = edge[1];
+            if (!unionFind.union(A, B)) {
+                return false;
+            }
+        }
+
+        // If we got this far, there's no cycles!
+        return true;
     }
+
+    public static void main(String[] args) {
+        App app = new App();
+        int arr[][] = new int[][]{{0,1},{1,2},{2,3},{1,3},{1,4}};
+        app.validTree(6, arr);
+    }
+
 }
